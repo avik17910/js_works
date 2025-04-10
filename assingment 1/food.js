@@ -1,0 +1,1 @@
+document.writeln("My favourite food is :palak panner,veg cheese Pizza,kaju Katli etc");

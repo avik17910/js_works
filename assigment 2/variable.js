@@ -1,0 +1,10 @@
+let a = 1;
+console.log(a);
+let b= "text";
+console.log(b);
+let c= null;
+console.log(c);
+let d;
+console.log(d);
+let e= true;
+console.log(e);

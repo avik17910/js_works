@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .products {
+            display: grid;
+
+            gap: 20px;
+            width: 60%;
+        }
+
+        table tr th td {
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            background: #f9f9f9;
+        }
+
+
+        .cart {
+            width: 35%;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background: #fff;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        button {
+            cursor: pointer;
+            padding: 5px 10px;
+            border: none;
+            background: #2c82d2;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .remove {
+            background: #7f58d9;
+
+        }
+    </style>
+</head>
+
+<body>
+    <h2 style="text-align: center;">Shoping Cart</h2>
+    <div class="container">
+        <div class="product" style:display:content:flex;>
+            <table>
+                <tr>
+                    <th><img src="https://picsum.photos/200" alt="product 1">
+                        <h3>Product 1</h3>
+                        <p>Rs.10</p>
+                        <button onclick="addToCart('product',10.00)">Add to cart</button>
+                    </th>
+                    <th><img src="https://picsum.photos/200" alt="product 2">
+                        <h3>Product 2</h3>
+                        <p>Rs.20</p>
+                        <button onclick="addToCart('product 2',20.00)">Add to cart</button>
+                    </th>
+                </tr>
+                <tr>
+                    <td><img src="https://picsum.photos/200" alt="">
+                        <h3>Product 3</h3>
+                        <p>Rs.30</p>
+                        <button onclick="addToCart('product 3',30.00)">Add to cart</button>
+                    </td>
+                    <td><img src="https://picsum.photos/200" alt="">
+                        <h3>Product 4</h3>
+                        <p>Rs.40</p>
+                        <button onclick="addToCart('product 4',40.00)">Add to cart</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="cart"></div>
+        <ul id="cart"></ul>
+    </div>
+    </div>
+    <script>
+
+        let cart = {};
+
+        function addToCart(productName, productPrice) {
+            if (cart[productName]) {
+                cart[productName].quantity += 1
+                cart[productName].totalPrice += productPrice
+            }
+            else {
+                cart[productName] = {
+                    quantity: 1,
+                    Price: productPrice,
+                    totalPrice: productPrice
+                };
+
+            }
+            updateCartDisplay();
+        }
+        function removeFromCart(productName) {
+            if (cart[productName]) {
+                cart[productName].quantity -= 1;
+                cart[productName].totalPrice -= cart[productName].Price;
+                if (cart[productName].quantity <= 0){
+                    delete cart[productName];
+                }
+            }
+
+            updateCartDisplay();
+        }
+        function updateCartDisplay() {
+            const cartlist = document.getElementById('cart');
+            cartlist.innerHTML = '';
+
+            for (let product in cart) {
+                const Listitem = document.createElement('li');
+                Listitem.classList.add('cart-item');
+                Listitem.innerHTML = `
+        ${product} - Qty: ${cart[product].quantity} - Rs ${cart[product].totalPrice.toFixed(2)}
+                    <button onclick="addToCart('${product}', ${cart[product].Price})">+</button>
+                    <button class="remove" onclick="removeFromCart('${product}')">-</button>
+        `;
+                cartlist.appendChild(Listitem);
+            }
+        }
+    </script>
+</body>
+
+</html>
